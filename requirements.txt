@@ -1,0 +1,10 @@
+fastapi
+fastapi-cli
+fastapi-cloud-cli
+fastar
+openai
+pydantic
+pydantic-extra-types
+pydantic-settings
+pydantic_core
+uvicorn
