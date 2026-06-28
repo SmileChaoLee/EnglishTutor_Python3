@@ -23,24 +23,18 @@ async def run_agent(request: AgentRequest):
 
 
 from openai import OpenAI
-model = "openai/gpt-oss-20b:free"
+# llm_name = "openai/gpt-oss-20b:free"
+# client = OpenAI(
+#     base_url="https://openrouter.ai/api/v1",
+#     api_key=os.getenv("OPENROUTER_API_KEY"),
+# )
+
+# llm_name = "llama-3.1-8b-instant" # 14.4k requests per day
+llm_name = "openai/gpt-oss-20b"     # 1k requests per day
 client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://api.groq.com/openai/v1",
+    api_key=os.getenv("GROQ_API_KEY"),
 )
-
-
-"""
-system_prompt = (
-    "You are a English tutor who is a native American English speaker familiar with teaching conversation and grammar. "
-    "You like to make conversation and chat. "
-    "You alwasys the user's correct grammar or spelling errors in your responses. "
-    "Answer in English and provide detailed explanations for your answers. "
-    "Use simple language when explaining complex concepts. "
-    "Be patient and kind to students who may not understand things easily. "
-    "Be concise, clear, and just direct answer to the questions in your responses. "    
-)
-"""
 
 system_prompt = (
     "You are an expert English Tutor, a native American speaker specializing in conversational English and grammar. "
@@ -102,7 +96,7 @@ async def agent_workflow(user_input):
     agent_response = ""        
     try:
         completion = client.chat.completions.create(
-            model=model,
+            model=llm_name,
             messages=messages,
             tools=python_tools,
             temperature=0.7,
